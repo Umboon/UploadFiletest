@@ -1,0 +1,77 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mycompany.testfile.controller;
+
+import com.mycompany.testfile.model.Document;
+import com.mycompany.testfile.model.File;
+import com.mycompany.testfile.repo.DocumentRepo;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
+
+/**
+ *
+ * @author UMBOON
+ */
+@RestController
+public class DocumentController {
+    
+    @Autowired
+     private DocumentRepo documentRepo;
+    
+     private File file;
+     
+    @RequestMapping(value = "/savedocument",method = RequestMethod.POST)
+    private void saveDocument(@RequestBody Document document){
+        System.out.println("---------------------------------------------------->"+file);
+        document.setFile(file);
+        documentRepo.save(document);
+        file = new File();
+    }
+    
+    @RequestMapping(value = "/deletedocument",method = RequestMethod.POST)
+    private void deleteDocument(@RequestBody Document document){
+        documentRepo.delete(document);
+    }
+    
+    @RequestMapping(value = "/getdocument",method = RequestMethod.GET)
+    private Page<Document> getDocument (Pageable pageable){
+        return documentRepo.findAll(pageable);
+    }
+    
+    @RequestMapping(value = "/savefile" , method = RequestMethod.POST)
+    private void saveFile(MultipartRequest multipartRequest) throws IOException{
+        file.setNameFile(multipartRequest.getFile("files").getOriginalFilename());
+        System.out.println("---------------------------------------------------->"+file.getNameFile());
+        file.setContent(multipartRequest.getFile("files").getBytes());
+        System.out.println("---------------------------------------------------->"+file.getContent());
+        file.setType(multipartRequest.getFile("files").getName());
+        System.out.println("---------------------------------------------------->"+file.getType());
+    }
+     
+    @RequestMapping(value = "/dowloaddocument" , method = RequestMethod.POST)
+    private void Dowload(@RequestBody File file){
+        System.out.println("------------------------------------------------>"+file.getId());
+        System.out.println("------------------------------------------------>"+file.getContent());
+        System.out.println("------------------------------------------------>"+file.getNameFile());
+    ResponseEntity<InputStreamResource> body = ResponseEntity.ok().contentLength(file.getContent().length)
+                .contentType(MediaType.parseMediaType(file.getType()))
+                .header("Content-Disposition", "attachment; filename=\""+ file.getNameFile()+"\"")
+                .body(new InputStreamResource(new ByteArrayInputStream(file.getContent())));
+    }
+    
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app="dowload">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="../js/jquery-1.11.3.min (3).js"></script>
+        <script src="../js/angular.min (3).js"></script>
+        <script src="../js/document.js"></script>
+        <script src="../js/dowload.js"></script>
+        <style>
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            th, td {
+                padding: 5px;
+            }
+        </style>
+    </head>
+    <body ng-controller="dowloadController">
+        <form>
+            <table>
+                <thead>
+                    <tr  style="width:100%" >
+                        <th>id</th>
+                        <th>topic</th>
+                        <th>keyWord</th>
+                        <th>dowload</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="dld in lodeDocument.content">
+                        <td>{{dld.id}}</td>
+                        <td>{{dld.topic}}</td>
+                        <td>{{dld.keyWord}}</td>
+                        <td><button ng-click="dowload(dld)">Dowload</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+        <a href="../index.html">Back</a>
+    </body>
+</html>

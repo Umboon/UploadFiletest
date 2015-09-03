@@ -1,0 +1,70 @@
+
+<html ng-app="document">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="../js/jquery-1.11.3.min (3).js"></script>
+        <script src="../js/angular.min (3).js"></script>
+        <script src="../js/document.js"></script>
+    </head>
+    <body ng-controller="documentController">
+        <h1>เพิ่มเอกสาร</h1>
+
+        <div>
+            <label>วันที่เอกสารเข้า :</label>
+            <input ng-model="document.dateReceived">
+        </div>
+        <div>
+            <label>วันที่ปฏิบัติงาน :</label>
+            <input ng-model="document.dateWork">
+        </div>
+        <div>
+            <label>หน่วยงานที่ออกหนังสือ :</label>
+            <input ng-model="document.agencyDocReleased">
+        </div>
+        <div>
+            <label>คำค้น :</label>
+            <input ng-model="document.keyWord">
+        </div>
+        <div>
+            <label>เลขที่หนังสือ :</label>
+            <input ng-model="document.bookNo">
+        </div>
+        <!--        <div>
+                    <label>หมวดงานเอกสาร :</label>
+                    <input ng-repeat="document.">
+                </div>-->
+        <div>
+            <label>เรื่อง :</label>
+            <input ng-model="document.topic">
+        </div>
+        <div>
+            <label>เรียน :</label>
+            <input ng-model="document.receiver">
+        </div>
+        <div>
+            <label>คำอธิบาย :</label>
+            <input ng-model="document.note">
+        </div>
+        <div>
+            <label>สิทธิ์การเห็น :</label>
+            <select class="form-control" ng-model="document.groupUser">
+                <option value="Public">สาธารณะ</option>
+                <option value="Teacher">อาจารย์</option>
+                <option value="Only me">เฉพาะฉัน</option>
+            </select>
+
+        </div>
+        <div>
+            <label>ไฟล์แนบ :</label>
+            <input type="file" file-model="file">
+        </div>
+        <div>
+            <label></label>
+            <input type="submit" value="save" ng-click="saveDocument()">
+        </div>
+         <a href="../index.html">Back</a>
+    </body>
+   
+</html>
