@@ -2,17 +2,16 @@ var app = angular.module('document', []);
 var app = angular.module('document', []).controller('documentController', function ($http, $scope) {
     $scope.file;
     $scope.document = {};
-   
-    
+
+
     $scope.saveDocument = function () {
         saveFile();
         saveDocument();
-
     };
-    
-    function saveDocument(){
-         $http.post('/savedocument', $scope.document).success(function (data) {
-         });
+
+    function saveDocument() {
+        $http.post('/savedocument', $scope.document).success(function (data) {
+        });
     }
 
     $scope.deleteDocument = function () {
@@ -22,17 +21,24 @@ var app = angular.module('document', []).controller('documentController', functi
     };
 
 
- 
 
-
-     function  saveFile() {
-        var fd = new FormData();
-        fd.append('files', $scope.file);
-        $http.post('/savefile', fd, {
+//    function saveFile() {
+//        var fd = new FormData();
+//        fd.append('files', $scope.file);
+//        $http.post('/savedocfile', fd, {
+//            transformRequest: angular.identity,
+//            headers: {'Content-Type': undefined}
+//        });
+//    }
+    
+    function saveFile (){
+             var fd = new FormData();
+        fd.append('file', $scope.file);
+             $http.post('/savedocfile',fd,{
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
         });
-    }
+        }
 
 });
 

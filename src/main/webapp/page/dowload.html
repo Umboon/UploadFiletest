@@ -31,6 +31,7 @@ and open the template in the editor.
                         <th>id</th>
                         <th>topic</th>
                         <th>keyWord</th>
+                        <th>File</th>
                         <th>dowload</th>
                     </tr>
                 </thead>
@@ -39,6 +40,7 @@ and open the template in the editor.
                         <td>{{dld.id}}</td>
                         <td>{{dld.topic}}</td>
                         <td>{{dld.keyWord}}</td>
+                        <td>{{dld.file.nameFile}}</td>
                         <td><button ng-click="dowload(dld)">Dowload</button></td>
                     </tr>
                 </tbody>

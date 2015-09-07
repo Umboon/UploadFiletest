@@ -6,7 +6,8 @@
 package com.mycompany.testfile.controller;
 
 import com.mycompany.testfile.model.Document;
-import com.mycompany.testfile.model.File;
+import com.mycompany.testfile.model.DocFile;
+import com.mycompany.testfile.repo.DocFileRepo;
 import com.mycompany.testfile.repo.DocumentRepo;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -32,16 +33,23 @@ public class DocumentController {
     
     @Autowired
      private DocumentRepo documentRepo;
+    @Autowired
+    private DocFileRepo docFileRepo;
     
-     private File file;
+     private DocFile docFile = new DocFile();
      
     @RequestMapping(value = "/savedocument",method = RequestMethod.POST)
     private void saveDocument(@RequestBody Document document){
-        System.out.println("---------------------------------------------------->"+file);
-        document.setFile(file);
+        System.out.println("---------------------------------------------------->"+docFile.getNameFile());
+        document.setFile(docFile);
         documentRepo.save(document);
-        file = new File();
+        docFile = new DocFile();
     }
+    
+    @RequestMapping(value = "/savedocfile" , method = RequestMethod.POST)
+   public void saveDocFile(MultipartRequest multipartRequest){
+       // docFile.setContent(multipartRequest.getFile("file"));
+   }
     
     @RequestMapping(value = "/deletedocument",method = RequestMethod.POST)
     private void deleteDocument(@RequestBody Document document){
@@ -53,25 +61,17 @@ public class DocumentController {
         return documentRepo.findAll(pageable);
     }
     
-    @RequestMapping(value = "/savefile" , method = RequestMethod.POST)
-    private void saveFile(MultipartRequest multipartRequest) throws IOException{
-        file.setNameFile(multipartRequest.getFile("files").getOriginalFilename());
-        System.out.println("---------------------------------------------------->"+file.getNameFile());
-        file.setContent(multipartRequest.getFile("files").getBytes());
-        System.out.println("---------------------------------------------------->"+file.getContent());
-        file.setType(multipartRequest.getFile("files").getName());
-        System.out.println("---------------------------------------------------->"+file.getType());
-    }
+    
      
-    @RequestMapping(value = "/dowloaddocument" , method = RequestMethod.POST)
-    private void Dowload(@RequestBody File file){
-        System.out.println("------------------------------------------------>"+file.getId());
-        System.out.println("------------------------------------------------>"+file.getContent());
-        System.out.println("------------------------------------------------>"+file.getNameFile());
-    ResponseEntity<InputStreamResource> body = ResponseEntity.ok().contentLength(file.getContent().length)
-                .contentType(MediaType.parseMediaType(file.getType()))
-                .header("Content-Disposition", "attachment; filename=\""+ file.getNameFile()+"\"")
-                .body(new InputStreamResource(new ByteArrayInputStream(file.getContent())));
-    }
+//    @RequestMapping(value = "/dowloaddocument" , method = RequestMethod.POST)
+//    private void Dowload(@RequestBody DocFile file){
+//        System.out.println("------------------------------------------------>"+file.getId());
+//        System.out.println("------------------------------------------------>"+file.getContent());
+//        System.out.println("------------------------------------------------>"+file.getNameFile());
+//    ResponseEntity<InputStreamResource> body = ResponseEntity.ok().contentLength(file.getContent().length)
+//                .contentType(MediaType.parseMediaType(file.getType()))
+//                .header("Content-Disposition", "attachment; filename=\""+ file.getNameFile()+"\"")
+//                .body(new InputStreamResource(new ByteArrayInputStream(file.getContent())));
+//    }
     
 }

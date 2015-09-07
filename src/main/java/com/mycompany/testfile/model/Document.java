@@ -43,7 +43,7 @@ public class Document implements Serializable {
     private String groupUser;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private File file;
+    private DocFile file;
 
     public Integer getId() {
         return id;
@@ -125,11 +125,11 @@ public class Document implements Serializable {
         this.groupUser = groupUser;
     }
 
-    public File getFile() {
+    public DocFile getFile() {
         return file;
     }
 
-    public void setFile(File file) {
+    public void setFile(DocFile file) {
         this.file = file;
     }
 

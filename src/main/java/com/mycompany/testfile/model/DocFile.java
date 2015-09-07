@@ -14,20 +14,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
+
 /**
  *
  * @author UMBOON
  */
 @Entity
-public class File implements Serializable{
+public class DocFile implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String nameFile;
-    
     @Lob
     private byte[] content;
-    
     private String type;
 
     public Integer getId() {
@@ -79,7 +78,7 @@ public class File implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final File other = (File) obj;
+        final DocFile other = (DocFile) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
